@@ -216,7 +216,7 @@ class FileConn {
 		fwrite($fh, $bitstream);
 		fclose($fh);
 
-		// Make sure a title has been set
+		// Make sure a title has been
 		$id3 = new getID3();
 		$id3->setOption(array('encoding' => 'UTF-8'));
 		$tag_info = $id3->analyze($this->download_loc . $path);
@@ -310,13 +310,13 @@ class FileConn {
 			preg_match($this->bookmark_regex, $bookmark, $matches);
 			if ($matches[2] === 'Podcasts') {					// Reset the playlist counter to 0
 				preg_replace("/^>\d*;(\d*)/", "0", $bookmark);
-				echo $bookmark . "\n";
 
 				$position = $matches[1];
 				// Get the playlist file
 				$playlist = file($this->playlist);
 				for ($i=0; $i<$position; $i++) {
 					$delete = array_shift($playlist);
+					echo "Deleting " . $delete . "\n";
 					unlink(chop($this->ipod . $delete));
 					$folder_regex = "/^.*\/Podcasts\/([^\/]*)\//";
 					preg_match($folder_regex, $delete, $matches);
@@ -333,7 +333,6 @@ class FileConn {
 				}
 				// Reset the playlist counter to 0
 				$bookmark = preg_replace("/^(>\d*;)(\d*)/", '${1}0', $bookmark);
-				echo $bookmark . "\n";
 			}
 			$bookmarks_rebuilt .= $bookmark;
 		}
