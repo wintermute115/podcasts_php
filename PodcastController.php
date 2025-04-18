@@ -86,7 +86,7 @@ class PodcastController {
 			$last_download = DateTime::createFromFormat('Y-m-d H:i:s', $item['podcast_last_downloaded']);
 			if ($podcast_id === $item['podcast_id'] || $podcast_name === $item['podcast_name'] || ($podcast_id === 0 && $podcast_name === '' && $item['podcast_skip'] === '0')) {
 				echo $item['podcast_name'] . "\n";
-				$podcasts = $this->curl->download_feed(url: $item['podcast_feed'], start_date: $item['podcast_last_downloaded']);
+				$podcasts = $this->curl->download_feed(url: $item['podcast_feed'], start_date: $item['podcast_last_downloaded'], single_year: $single_year);
 				$count_podcasts = 0;
 				foreach($podcasts as $podcast) {
 					$count_podcasts++;

@@ -21,8 +21,11 @@ class PodcastCurl {
 	 * @param string $start_date
 	 * @return array
 	 */
-	public function download_feed(string $url, string $start_date) :array {
+	public function download_feed(string $url, string $start_date, bool $single_year) :array {
 		$last_date = DateTime::createFromFormat('Y-m-d H:i:s', $start_date);
+		// If the year flag is set, skip back that far before downloading
+		$end_date = ($single_year ? $last_date : new DateTime());
+		$end_date->add(DateInterval::createFromDateString("1 year"));
 		$items = [];
 		$this->parser->set_feed_url($url);
 		$this->parser->init();
@@ -30,7 +33,7 @@ class PodcastCurl {
 		$entries = $this->parser->get_items();
 		foreach($entries as $entry) {
 			$item_date = DateTime::createFromFormat('Y-m-d H:i:s', $entry->get_date('Y-m-d H:i:s'));
-			if ($item_date > $last_date) {
+			if ($item_date > $last_date && $item_date <= $end_date) {
 				$enclosure = $entry->get_enclosure();
 				if ($enclosure->get_medium() == 'audio' || $enclosure->get_handler() == 'mp3') {
 					$item = [

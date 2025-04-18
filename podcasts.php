@@ -1,5 +1,6 @@
 #!/usr/bin/env php
 <?php
+chdir(__DIR__);
 
 require_once('vendor/autoload.php');
 require_once('PodcastController.php');

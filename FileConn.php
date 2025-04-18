@@ -216,6 +216,7 @@ class FileConn {
 		fwrite($fh, $bitstream);
 		fclose($fh);
 
+		// Make sure a title has been set
 		$id3 = new getID3();
 		$id3->setOption(array('encoding' => 'UTF-8'));
 		$tag_info = $id3->analyze($this->download_loc . $path);
