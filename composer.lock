@@ -1,0 +1,63 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "329afcec7d7e0506562d35dcb3400424",
+    "packages": [
+        {
+            "name": "xylphid/php-id3",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/xylphid/php-id3.git",
+                "reference": "dca9a33a35ad0de2a5bee4e47e12a1f088e9bd65"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/xylphid/php-id3/zipball/dca9a33a35ad0de2a5bee4e47e12a1f088e9bd65",
+                "reference": "dca9a33a35ad0de2a5bee4e47e12a1f088e9bd65",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Id3\\": "src/Id3/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Anthony PERIQUET",
+                    "email": "anthonyperiquet@gmail.com"
+                }
+            ],
+            "description": "ID3 tag reader / writer",
+            "keywords": [
+                "id3",
+                "media"
+            ],
+            "support": {
+                "issues": "https://github.com/xylphid/php-id3/issues",
+                "source": "https://github.com/xylphid/php-id3/tree/1.0.2"
+            },
+            "time": "2023-03-15T11:44:31+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {},
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {},
+    "platform-dev": {},
+    "plugin-api-version": "2.6.0"
+}

@@ -1,0 +1,6 @@
+{
+    "name": "wintermute11/podcasts",
+    "require": {
+        "xylphid/php-id3": "^1.0"
+    }
+}
