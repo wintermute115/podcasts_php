@@ -39,7 +39,7 @@ class PodcastCurl {
 						"date" => $item_date->format('Y-m-d H:i:s'),
 						"duration" => $enclosure->get_duration(true),
 						"length" => $enclosure->get_length(),
-						"desc" => str_replace("\n", " ", strip_tags($enclosure->get_description() ?? $entry->get_description()))
+						"desc" => preg_replace("/\s{2, }/", " ", str_replace("\n", " ", strip_tags($enclosure->get_description() ?? $entry->get_description())))
 					];
 					$items[] = $item;
 				}

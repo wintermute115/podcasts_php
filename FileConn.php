@@ -19,7 +19,7 @@ class FileConn {
 		// $this->ipod = "/home/ross/ipod/";
 		$this->download_loc = "/home/ross/Downloads/New_Podcasts/";
 		$this->lockfile = $this->download_loc . "podcasts.lock";
-		$this->logfile = "/home/ross/scripts/podcasts/logs/podcasts_" . date("Y") . ".log";
+		$this->logfile = "/home/ross/scripts/podcasts_php/logs/podcasts_" . date("Y") . ".log";
 		$this->bookmarks = $this->ipod . ".rockbox/most-recent.bmark";
 		$this->bookmark_regex = "/^>\d*;(\d*);(?:\d*;){7}\/Playlists\/(.*)\.m3u8/";
 		$this->playlist = $this->ipod . "Playlists/Podcasts.m3u8";
