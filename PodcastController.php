@@ -3,7 +3,7 @@
 require_once('MysqlConn.php');
 require_once('PodcastCurl.php');
 require_once('FileConn.php');
-use Id3\Id3;
+require_once('vendor/james-heinrich/getid3/getid3/getid3.php');
 
 /**
  * Core controller module that handles interactions between different parts of the system
@@ -93,7 +93,7 @@ class PodcastController {
 					$duration = $podcast['duration'] ?? "??:??";
 					$length = $podcast['length'] ?? 0;
 					$bitstream = $this->curl->get_podcast(url: $podcast['url'], title: $podcast['title'], duration: $duration, length: $length);
-					$location = $this->fileconn->save_podcast(bitstream: $bitstream, podcast_name: $item['podcast_name']);
+					$location = $this->fileconn->save_podcast(bitstream: $bitstream, podcast_name: $item['podcast_name'], episode_title: $podcast['title']);
 					$temporary_playlist[$podcast['date'] . $item['podcast_name']]= $location;
 					$downloaded++;
 					$last_download = max($last_download, DateTime::createFromFormat('Y-m-d H:i:s', $podcast['date']));

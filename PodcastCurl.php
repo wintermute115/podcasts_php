@@ -1,6 +1,6 @@
 <?php
 
-require_once('simplepie/autoloader.php');
+require_once('vendor/simplepie/autoloader.php');
 
 /**
  * Handles all connections to the internet

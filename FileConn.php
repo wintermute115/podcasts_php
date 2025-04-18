@@ -1,4 +1,5 @@
 <?php
+use Id3\Id3Parser;
 
 /**
  * Handles all interactions with the filesystem
@@ -207,13 +208,29 @@ class FileConn {
 	 * @param string $podcast_name
 	 * @return string
 	 */
-	public function save_podcast(string $bitstream, string $podcast_name) :string {
+	public function save_podcast(string $bitstream, string $podcast_name, string $episode_title) :string {
 		$filename = $this->create_random_name();
 		$this->create_path($this->download_loc . "Podcasts/" . $podcast_name . "/");
 		$path = "Podcasts/" . $podcast_name . "/" . $filename;
 		$fh = fopen($this->download_loc . $path, "wb");
 		fwrite($fh, $bitstream);
 		fclose($fh);
+
+		$id3 = new getID3();
+		$id3->setOption(array('encoding' => 'UTF-8'));
+		$tag_info = $id3->analyze($this->download_loc . $path);
+		$id3->CopyTagsToComments($tag_info);
+		if (!isset($tag_info['comments_html']['title'])) {
+			$tagwriter = new getid3_writetags;
+			$tagwriter->filename = $this->download_loc . $path;
+			$tagwriter->remove_other_tags = false;
+			$tag_data = [];
+			$tag_data['title'][0] = $episode_title;
+			$tagwriter->tag_data = $tag_data;
+			$tagwriter->tagformats = ['id3v1', 'id3v2.3'];
+			$tagwriter->WriteTags();
+		}
+		echo "\n";
 
 		return "/" . $path;
 	}

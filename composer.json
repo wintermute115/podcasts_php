@@ -1,6 +1,6 @@
 {
     "name": "wintermute115/podcasts",
     "require": {
-        "xylphid/php-id3": "^1.0"
+        "james-heinrich/getid3": "^1.9"
     }
 }

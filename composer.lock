@@ -4,51 +4,74 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "329afcec7d7e0506562d35dcb3400424",
+    "content-hash": "05bb4fb06eb020cce431e8bfe9d3754c",
     "packages": [
         {
-            "name": "xylphid/php-id3",
-            "version": "1.0.2",
+            "name": "james-heinrich/getid3",
+            "version": "v1.9.23",
             "source": {
                 "type": "git",
-                "url": "https://github.com/xylphid/php-id3.git",
-                "reference": "dca9a33a35ad0de2a5bee4e47e12a1f088e9bd65"
+                "url": "https://github.com/JamesHeinrich/getID3.git",
+                "reference": "06c7482532ff2b3f9111b011d880ca6699c8542b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xylphid/php-id3/zipball/dca9a33a35ad0de2a5bee4e47e12a1f088e9bd65",
-                "reference": "dca9a33a35ad0de2a5bee4e47e12a1f088e9bd65",
+                "url": "https://api.github.com/repos/JamesHeinrich/getID3/zipball/06c7482532ff2b3f9111b011d880ca6699c8542b",
+                "reference": "06c7482532ff2b3f9111b011d880ca6699c8542b",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.0.0"
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "php-parallel-lint/php-parallel-lint": "^1.0"
+            },
+            "suggest": {
+                "ext-SimpleXML": "SimpleXML extension is required to analyze RIFF/WAV/BWF audio files (also requires `ext-libxml`).",
+                "ext-com_dotnet": "COM extension is required when loading files larger than 2GB on Windows.",
+                "ext-ctype": "ctype extension is required when loading files larger than 2GB on 32-bit PHP (also on 64-bit PHP on Windows) or executing `getid3_lib::CopyTagsToComments`.",
+                "ext-dba": "DBA extension is required to use the DBA database as a cache storage.",
+                "ext-exif": "EXIF extension is required for graphic modules.",
+                "ext-iconv": "iconv extension is required to work with different character sets (when `ext-mbstring` is not available).",
+                "ext-json": "JSON extension is required to analyze Apple Quicktime videos.",
+                "ext-libxml": "libxml extension is required to analyze RIFF/WAV/BWF audio files.",
+                "ext-mbstring": "mbstring extension is required to work with different character sets.",
+                "ext-mysql": "MySQL extension is required to use the MySQL database as a cache storage (deprecated in PHP 5.5, removed in PHP >= 7.0, use `ext-mysqli` instead).",
+                "ext-mysqli": "MySQLi extension is required to use the MySQL database as a cache storage.",
+                "ext-rar": "RAR extension is required for RAR archive module.",
+                "ext-sqlite3": "SQLite3 extension is required to use the SQLite3 database as a cache storage.",
+                "ext-xml": "XML extension is required for graphic modules to analyze the XML metadata.",
+                "ext-zlib": "Zlib extension is required for archive modules and compressed metadata."
             },
             "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Id3\\": "src/Id3/"
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.9.x-dev"
                 }
+            },
+            "autoload": {
+                "classmap": [
+                    "getid3/"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "proprietary"
+                "GPL-1.0-or-later",
+                "LGPL-3.0-only",
+                "MPL-2.0"
             ],
-            "authors": [
-                {
-                    "name": "Anthony PERIQUET",
-                    "email": "anthonyperiquet@gmail.com"
-                }
-            ],
-            "description": "ID3 tag reader / writer",
+            "description": "PHP script that extracts useful information from popular multimedia file formats",
+            "homepage": "https://www.getid3.org/",
             "keywords": [
-                "id3",
-                "media"
+                "codecs",
+                "php",
+                "tags"
             ],
             "support": {
-                "issues": "https://github.com/xylphid/php-id3/issues",
-                "source": "https://github.com/xylphid/php-id3/tree/1.0.2"
+                "issues": "https://github.com/JamesHeinrich/getID3/issues",
+                "source": "https://github.com/JamesHeinrich/getID3/tree/v1.9.23"
             },
-            "time": "2023-03-15T11:44:31+00:00"
+            "time": "2023-10-19T13:18:49+00:00"
         }
     ],
     "packages-dev": [],
