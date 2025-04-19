@@ -113,7 +113,10 @@ class PodcastController {
 		foreach($temporary_playlist as $playlist_item) {
 			$playlist .= $playlist_item . "\n";
 		}
-		$this->fileconn->save_playlist($playlist);
+
+		if ($downloaded > 0) {
+			$this->fileconn->save_playlist($playlist);
+		}
 		$this->fileconn->remove_lockfile();
 	}
 

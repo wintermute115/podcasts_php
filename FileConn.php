@@ -231,7 +231,6 @@ class FileConn {
 			$tagwriter->tagformats = ['id3v1', 'id3v2.3'];
 			$tagwriter->WriteTags();
 		}
-		echo "\n";
 
 		return "/" . $path;
 	}
