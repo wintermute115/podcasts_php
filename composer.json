@@ -1,6 +1,7 @@
 {
     "name": "wintermute115/podcasts",
     "require": {
-        "james-heinrich/getid3": "^1.9"
+        "james-heinrich/getid3": "^1.9",
+        "jenwachter/php-rsync": "^2.0"
     }
 }

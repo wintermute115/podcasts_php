@@ -1,5 +1,6 @@
 <?php
 use Id3\Id3Parser;
+use PhpRsync\Rsync;
 
 /**
  * Handles all interactions with the filesystem
@@ -375,5 +376,17 @@ class FileConn {
 			rmdir($from);
 		}
 		return $results;
+	}
+
+	public function backup(string $folder) :void {
+		echo "Backing up " . strtolower($folder) . "… ";
+		$local = new PhpRsync\Connection('local', '/home/ross/Documents/ipod/" . $folder . "/');
+		$rsync = new Rsync(($local));
+		$options = [
+			'archive' => true,
+			'delete' => true
+		];
+		$rsync->run($this->ipod . "$folder/", '/home/ross/Documents/ipod/$folder/', $options);
+		echo "Done.\n";
 	}
 }
