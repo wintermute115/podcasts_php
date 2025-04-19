@@ -12,8 +12,12 @@ class MysqlConn {
 	private $conn;
 
 	public function __construct() {
-		$dsn = "mysql:dbname={$this->database};host={$this->host}";
-		$this->conn = new PDO($dsn, $this->user, $this->pass);
+		try {
+			$dsn = "mysql:dbname={$this->database};host={$this->host}";
+			$this->conn = new PDO($dsn, $this->user, $this->pass);
+		} catch (Exception $e) {
+			die ("Cannot connect to database\n");
+		}
 	}
 
 	/**
@@ -70,10 +74,13 @@ EOT;
 		$sql = "SELECT podcast_name, podcast_skip FROM podcasts WHERE podcast_id = :podcast_id";
 		$check = $this->conn->prepare($sql);
 		$check->bindParam(':podcast_id', $podcast_id, PDO::PARAM_INT);
-		$check->execute();
-		$results = $check->fetch(PDO::FETCH_ASSOC);
-		$response['name'] = $results['podcast_name'];
-		$response['state'] = ($results['podcast_skip'] == '1' ? "off" : "on");
+		if ($check->execute()) {
+			$results = $check->fetch(PDO::FETCH_ASSOC);
+			$response['name'] = $results['podcast_name'];
+			$response['state'] = ($results['podcast_skip'] == '1' ? "off" : "on");
+		} else {
+			die("Cannot get podcast list");
+		}
 		return $response;
 	}
 
@@ -97,10 +104,13 @@ EOT;
 		$sql = "SELECT podcast_skip FROM podcasts WHERE podcast_name = :podcast_name";
 		$check = $this->conn->prepare($sql);
 		$check->bindParam(':podcast_name', $podcast_name, PDO::PARAM_STR);
-		$check->execute();
-		$results = $check->fetch(PDO::FETCH_ASSOC);
-		$response['name'] = $podcast_name;
-		$response['state'] = ($results['podcast_skip'] == '1' ? "off" : "on");
+		if ($check->execute()) {
+			$results = $check->fetch(PDO::FETCH_ASSOC);
+			$response['name'] = $podcast_name;
+			$response['state'] = ($results['podcast_skip'] == '1' ? "off" : "on");	
+		} else {
+			die("Cannot update database");
+		}
 		return $response;
 	}
 
