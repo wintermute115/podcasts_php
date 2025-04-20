@@ -14,6 +14,7 @@ class FileConn {
 	private $bookmark_regex;
 	private $playlist;
 	private $download_playlist;
+	private $backup_location;
 
 	public function __construct() {
 		$this->ipod = "/media/ross/iPodClassic/";
@@ -25,6 +26,7 @@ class FileConn {
 		$this->bookmark_regex = "/^>\d*;(\d*);(?:\d*;){7}\/Playlists\/(.*)\.m3u8/";
 		$this->playlist = $this->ipod . "Playlists/Podcasts.m3u8";
 		$this->download_playlist = $this->download_loc . "Playlists/Podcasts.m3u8";
+		$this->backup_location = "/home/ross/Documents/ipod/";
 	}
 
 	/**
@@ -380,13 +382,13 @@ class FileConn {
 
 	public function backup(string $folder, bool $delete=false) :void {
 		echo "Backing up " . strtolower($folder) . "… ";
-		$local = new PhpRsync\Connection('local', '/home/ross/Documents/ipod/" . $folder . "/');
-		$rsync = new Rsync(($local));
+		$local = new PhpRsync\Connection('local', $this->backup_location . $folder . "/");
+		$rsync = new Rsync($local);
 		$options = [
 			'archive' => true,
 			'delete' => $delete
 		];
-		$rsync->run($this->ipod . "$folder/", '/home/ross/Documents/ipod/$folder/', $options);
+		$rsync->run($this->ipod . "$folder/", $this->backup_location . $folder . "/", $options);
 		echo "Done.\n";
 	}
 }
