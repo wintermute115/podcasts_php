@@ -155,9 +155,9 @@ class PodcastController {
 		}
 		$this->fileconn->copy_playlist(mode: $mode);
 		$this->fileconn->write_move_log(mode: $mode, message: chop($result['message']));
-		$this->fileconn->backup(folder: "Podcasts");
-		$this->fileconn->backup(folder: "Music");
-		$this->fileconn->backup(folder: "Playlists");
+		$this->fileconn->backup(folder: "Podcasts", delete: true);
+		$this->fileconn->backup(folder: "Music", delete: false);
+		$this->fileconn->backup(folder: "Playlists", delete: true);
 	}
 
 	/**

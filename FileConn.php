@@ -378,13 +378,13 @@ class FileConn {
 		return $results;
 	}
 
-	public function backup(string $folder) :void {
+	public function backup(string $folder, bool $delete=false) :void {
 		echo "Backing up " . strtolower($folder) . "… ";
 		$local = new PhpRsync\Connection('local', '/home/ross/Documents/ipod/" . $folder . "/');
 		$rsync = new Rsync(($local));
 		$options = [
 			'archive' => true,
-			'delete' => true
+			'delete' => $delete
 		];
 		$rsync->run($this->ipod . "$folder/", '/home/ross/Documents/ipod/$folder/', $options);
 		echo "Done.\n";
