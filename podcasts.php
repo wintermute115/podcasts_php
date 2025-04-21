@@ -12,6 +12,9 @@ $shortops .= "p:";
 $shortops .= "y";
 $shortops .= "t";
 $shortops .= "x";
+$shortops .= "a";
+$shortops .= "n:";
+$shortops .= "u:";
 
 $controller = new PodcastController();
 
@@ -26,6 +29,16 @@ if (isset($options['l'])) {
 // Delete podcasts that have been listened to
 if (isset($options['x'])) {
 	$controller->clean_podcasts();
+	exit();
+}
+
+// Add a new podcast to the database
+if (isset($options['a'])) {
+	if (empty($options['n']) || empty($options['u'])) {
+		print "Podcast [n]ame and [u]rl must be specified\n";
+		exit();
+	}
+	$controller->add_new_podcast(name: $options['n'], url: $options['u']);
 	exit();
 }
 

@@ -129,4 +129,17 @@ EOT;
 		$update->bindParam(":id", $podcast_id, PDO::PARAM_INT);
 		$update->execute();
 	}
+
+	public function add_new_podcast(string $name, string $url) :bool {
+		$sql = <<<EOT
+INSERT INTO podcasts
+	(podcast_name, podcast_feed, podcast_last_download, podcast_skip)
+VALUES
+	(:name, :url, '2000-01-01 00:00:00', '1');
+EOT;
+		$insert = $this->conn->prepare($sql);
+		$insert->bindParam(':name', $name, PDO::PARAM_STR);
+		$insert->bindParam(':url', $url, PDO::PARAM_STR);
+		return $insert->execute();
+	}
 }

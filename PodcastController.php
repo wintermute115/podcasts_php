@@ -189,4 +189,12 @@ class PodcastController {
 			echo str_pad($podcast, $max_len) . "  " . str_pad("", $count, "X") . "\n";
 		}
 	}
+
+	public function add_new_podcast(string $name, string $url) :void {
+		if ($this->dbconn->add_new_podcast(name: $name, url: $url)) {
+			echo "Podcast \"$name\" [$url] has been added to the library\n";
+		} else {
+			"Could not add new podcasts to the library\n";
+		}
+	}
 }
