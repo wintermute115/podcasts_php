@@ -14,6 +14,19 @@ class PodcastCurl {
 		$this->parser = new SimplePie\SimplePie();
 	}
 
+	public function test_connection() :bool {
+		$ch = curl_init("https://www.google.com/");
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+		curl_setopt($ch, CURLOPT_FRESH_CONNECT, true);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
+		curl_setopt($ch, CURLOPT_CONNECT_ONLY, true);
+		if (curl_exec($ch) === false) {
+			return false;
+		}
+		return true;
+	}
+
 	/**
 	 * Get a list of all episodes in a feed waiting to be downlaoded
 	 *

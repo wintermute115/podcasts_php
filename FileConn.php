@@ -141,6 +141,7 @@ class FileConn {
 			return ["success" => false, "message" => "No podcasts to copy!\n"];
 		}
 		//Copy files
+		$this->create_lockfile();
 		echo "Copying files… ";
 		$counts = $this->movedir(from: $this->download_loc . "Podcasts/", to: $this->ipod . "Podcasts/");
 		if ($counts['error'] > 0) {
@@ -151,6 +152,7 @@ class FileConn {
 		$output .= $counts['dirs'];
 		$output .= ($counts['dirs'] === 1 ? " podcast" : " podcasts") . " copied over.\n";
 		echo "Done.\n";
+		$this->remove_lockfile();
 		return ["success" => true, "message" => $output];
 	}
 
@@ -245,7 +247,7 @@ class FileConn {
 	 * @return void
 	 */
 	public function save_playlist(string $playlist) : void {
-		echo "Copying playlist… ";
+		echo "Creating playlist… ";
 		$this->create_path($this->download_loc . "Playlists/");
 		$fh = fopen($this->download_playlist, "a");
 		fwrite($fh, $playlist);
@@ -380,15 +382,23 @@ class FileConn {
 		return $results;
 	}
 
+	/**
+	 * Backup content after copying, in case of disaster
+	 *
+	 * @param string $folder
+	 * @param boolean $delete
+	 * @return void
+	 */
 	public function backup(string $folder, bool $delete=false) :void {
 		echo "Backing up " . strtolower($folder) . "… ";
-		$local = new PhpRsync\Connection('local', $this->backup_location . $folder . "/");
+		$this->create_path($this->backup_location . $folder . "/");
+		$local = new PhpRsync\Connection('local', $this->backup_location);
 		$rsync = new Rsync($local);
 		$options = [
 			'archive' => true,
 			'delete' => $delete
 		];
-		$rsync->run($this->ipod . "$folder/", $this->backup_location . $folder . "/", $options);
+		$rsync->run($this->ipod . $folder . "/", $folder . "/", $options);
 		echo "Done.\n";
 	}
 }

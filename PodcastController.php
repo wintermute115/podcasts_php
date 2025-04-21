@@ -76,6 +76,11 @@ class PodcastController {
 			echo "Another download is in progress. Please try again later.\n";
 			return;
 		}
+
+		if (!$this->curl->test_connection()) {
+			die ("No internet connection\n");
+		}
+
 		$downloaded = 0;
 
 		$temporary_playlist = [];
