@@ -227,13 +227,41 @@ class FileConn {
 		$tag_info = $id3->analyze($this->download_loc . $path);
 		$id3->CopyTagsToComments($tag_info);
 		if (!isset($tag_info['comments_html']['title'])) {
-			$tagwriter = new getid3_writetags;
+			$tagwriter = new getid3_writetags();
 			$tagwriter->filename = $this->download_loc . $path;
 			$tagwriter->remove_other_tags = false;
 			$tag_data = [];
 			$tag_data['title'][0] = $episode_title;
 			$tagwriter->tag_data = $tag_data;
 			$tagwriter->tagformats = ['id3v1', 'id3v2.3'];
+			$tagwriter->WriteTags();
+		}
+
+		// Make sure embedded images are in the right format
+		if (isset($tag_info['id3v2']['APIC'])) {
+			$jpgfile = $this->download_loc . "temp.jpg";
+			$image = $tag_info['id3v2']['APIC'][0]['data'];
+			$gd_image = imagecreatefromstring($image);
+			$gd_image = imagescale($gd_image, 500);
+			imageinterlace($gd_image, false);
+
+			imagejpeg($gd_image, $jpgfile);
+
+			$fh = fopen($jpgfile, "rb");
+			$memimage = fread($fh, filesize($jpgfile));
+			fclose($fh);
+			unlink($jpgfile);
+
+			$tagwriter = new getid3_writetags();
+			$tagwriter->filename = $this->download_loc . $path;
+			$tagwriter->tagformats = ['id3v2.3'];
+			$tagdata = [];
+			$tagdata['attached_picture'][0]['data'] = $memimage;
+			$tagdata['attached_picture'][0]['picturetypeid'] = 0x03;
+			$tagdata['attached_picture'][0]['mime'] = 'image/jpeg';
+			$tagdata['attached_picture'][0]['description'] = 'Episode Art';
+
+			$tagwriter->tag_data = $tagdata;
 			$tagwriter->WriteTags();
 		}
 
