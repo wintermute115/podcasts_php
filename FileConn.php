@@ -255,6 +255,7 @@ class FileConn {
 			$tagwriter = new getid3_writetags();
 			$tagwriter->filename = $this->download_loc . $path;
 			$tagwriter->tagformats = ['id3v2.3'];
+			$tagwriter->remove_other_tags = false;
 			$tagdata = [];
 			$tagdata['attached_picture'][0]['data'] = $memimage;
 			$tagdata['attached_picture'][0]['picturetypeid'] = 0x03;
