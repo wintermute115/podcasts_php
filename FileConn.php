@@ -256,7 +256,10 @@ class FileConn {
 			$tagwriter->filename = $this->download_loc . $path;
 			$tagwriter->tagformats = ['id3v2.3'];
 			$tagwriter->remove_other_tags = false;
-			$tagdata = [];
+			$tagdata = [];    
+			foreach (['title', 'album', 'artist', 'genre', 'year'] as $tag) {
+				$tagdata[$tag][0] = $tag_info['comments'][$tag][0];
+			}
 			$tagdata['attached_picture'][0]['data'] = $memimage;
 			$tagdata['attached_picture'][0]['picturetypeid'] = 0x03;
 			$tagdata['attached_picture'][0]['mime'] = 'image/jpeg';
