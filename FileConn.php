@@ -15,6 +15,7 @@ class FileConn {
 	private $playlist;
 	private $download_playlist;
 	private $backup_location;
+	public $mysqldump_location;
 
 	public function __construct() {
 		$this->ipod = "/media/ross/iPodClassic/";
@@ -27,6 +28,7 @@ class FileConn {
 		$this->playlist = $this->ipod . "Playlists/Podcasts.m3u8";
 		$this->download_playlist = $this->download_loc . "Playlists/Podcasts.m3u8";
 		$this->backup_location = "/home/ross/Documents/ipod/";
+		$this->mysqldump_location = "/home/ross/pCloudDrive/podcasts.sql";
 	}
 
 	/**

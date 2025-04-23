@@ -142,4 +142,8 @@ EOT;
 		$insert->bindParam(':url', $url, PDO::PARAM_STR);
 		return $insert->execute();
 	}
+
+	public function mysqldump(string $location) :void {
+		exec("mysqldump -u" . $this->user . " -p" . $this->pass . " " . $this->database . " > " . $location . " 2>/dev/null");
+	}
 }

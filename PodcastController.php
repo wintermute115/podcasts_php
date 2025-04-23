@@ -121,6 +121,7 @@ class PodcastController {
 
 		if ($downloaded > 0) {
 			$this->fileconn->save_playlist($playlist);
+			$this->dbconn->mysqldump($this->fileconn->mysqldump_location);
 		}
 		$this->fileconn->remove_lockfile();
 	}
