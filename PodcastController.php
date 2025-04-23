@@ -201,6 +201,7 @@ class PodcastController {
 	public function add_new_podcast(string $name, string $url) :void {
 		if ($this->dbconn->add_new_podcast(name: $name, url: $url)) {
 			echo "Podcast \"$name\" [$url] has been added to the library\n";
+			$this->fileconn->write_add_log(name: $name, url: $url);
 		} else {
 			"Could not add new podcasts to the library\n";
 		}
