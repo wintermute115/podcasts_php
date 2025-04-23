@@ -360,7 +360,7 @@ class FileConn {
 	 */
 	public function write_add_log(string $name, string $url) :void {
 		$log_entry  = $this->log_timestamp();
-		$log_entry .= "Podcast \"$name\" at $feed has been added (currently disabled)\n";
+		$log_entry .= "Podcast \"$name\" at $url has been added (currently disabled)\n";
 		$this->write_to_log($log_entry);
 	}
 
