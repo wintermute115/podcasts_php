@@ -291,6 +291,29 @@ class FileConn {
 	}
 
 	/**
+	 * Write to the logfile
+	 *
+	 * @param string $message
+	 * @return void
+	 */
+	private function write_to_log(string $message) :void {
+		$fh = fopen($this->logfile, "a");
+		fwrite($fh, $message);
+		fclose($fh);
+	}
+
+	/**
+	 * Get the timestamp formatted for the log entries
+	 *
+	 * @return string
+	 */
+	private function log_timestamp() :string {
+		$now = new DateTime();
+		$time = $now->format("Y-m-d H:i:s") . " -- ";
+		return $time;
+	}
+
+	/**
 	 * Write a log entry saying an episode has been downloaded
 	 *
 	 * @param string $title
@@ -300,16 +323,13 @@ class FileConn {
 	 * @return void
 	 */
 	public function write_download_log(string $title, string $filename, string $duration, string $desc) :void {
-		$now = new DateTime();
-		$log_entry  = $now->format("Y-m-d H:i:s") . " -- ";
+		$log_entry  = $this->log_timestamp();
 		$log_entry .= "Downloading \"$title\" ";
 		$log_entry .= "[$filename] - ";
 		$log_entry .= "[$duration]\n";
 		$log_entry .= str_pad("", 23);
 		$log_entry .= "$desc\n";
-		$fh = fopen($this->logfile, "a");
-		fwrite($fh, $log_entry);
-		fclose($fh);
+		$this->write_to_log($log_entry);
 	}
 
 	/**
@@ -320,8 +340,7 @@ class FileConn {
 	 * @return void
 	 */
 	public function write_move_log(string $mode, string $message) : void {
-		$now = new DateTime();
-		$log_entry  = $now->format("Y-m-d H:i:s") . " -- ";
+		$log_entry  = $this->log_timestamp();
 		$log_entry .= match($mode) {
 			'a' => "Append mode",
 			'i' => "Insert mode",
@@ -329,9 +348,20 @@ class FileConn {
 		};
 		$log_entry .= " - " . $message . "\n";
 		$log_entry .= "-------------------\n";
-		$fh = fopen($this->logfile, "a");
-		fwrite($fh, $log_entry);
-		fclose($fh);
+		$this->write_to_log($log_entry);
+	}
+
+	/**
+	 * Write a log entry saying a new podcast has been added
+	 *
+	 * @param string $name
+	 * @param string $url
+	 * @return void
+	 */
+	public function write_add_log(string $name, string $url) :void {
+		$log_entry  = $this->log_timestamp();
+		$log_entry .= "Podcast \"$name\" at $feed has been added (currently disabled)\n";
+		$this->write_to_log($log_entry);
 	}
 
 	/**

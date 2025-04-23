@@ -191,6 +191,13 @@ class PodcastController {
 		}
 	}
 
+	/**
+	 * Add a new podcast into the database to be downloaded
+	 *
+	 * @param string $name
+	 * @param string $url
+	 * @return void
+	 */
 	public function add_new_podcast(string $name, string $url) :void {
 		if ($this->dbconn->add_new_podcast(name: $name, url: $url)) {
 			echo "Podcast \"$name\" [$url] has been added to the library\n";

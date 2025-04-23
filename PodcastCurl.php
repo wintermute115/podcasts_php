@@ -14,6 +14,12 @@ class PodcastCurl {
 		$this->parser = new SimplePie\SimplePie();
 	}
 
+
+	/**
+	 * Ensure we have an active connection to the internet
+	 *
+	 * @return boolean
+	 */
 	public function test_connection() :bool {
 		$ch = curl_init("https://www.google.com/");
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -88,6 +94,16 @@ class PodcastCurl {
 		return $file;
 	}
 
+	/**
+	 * Show the amount downloaded in realtime
+	 *
+	 * @param CurlHandle $ch
+	 * @param integer $total_size
+	 * @param integer $downloaded
+	 * @param integer $to_upload
+	 * @param integer $uploaded
+	 * @return integer
+	 */
 	private function show_status(CurlHandle $ch, int $total_size, int $downloaded, int $to_upload, int $uploaded) : int {
 		echo "Downloaded " . number_format($downloaded / 1024) . " of " . number_format($total_size / 1024) . "Kb\r";
 		return 0;

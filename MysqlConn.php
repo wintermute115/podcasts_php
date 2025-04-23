@@ -130,6 +130,13 @@ EOT;
 		$update->execute();
 	}
 
+	/**
+	 * Add a new podcast to the database
+	 *
+	 * @param string $name
+	 * @param string $url
+	 * @return boolean
+	 */
 	public function add_new_podcast(string $name, string $url) :bool {
 		$sql = <<<EOT
 INSERT INTO podcasts
@@ -143,6 +150,12 @@ EOT;
 		return $insert->execute();
 	}
 
+	/**
+	 * Create a backup of the database in case of disaster
+	 *
+	 * @param string $location
+	 * @return void
+	 */
 	public function mysqldump(string $location) :void {
 		exec("mysqldump -u" . $this->user . " -p" . $this->pass . " " . $this->database . " > " . $location . " 2>/dev/null");
 	}
