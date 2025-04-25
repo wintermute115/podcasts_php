@@ -244,31 +244,33 @@ class FileConn {
 			$jpgfile = $this->download_loc . "temp.jpg";
 			$image = $tag_info['id3v2']['APIC'][0]['data'];
 			$gd_image = imagecreatefromstring($image);
-			$gd_image = imagescale($gd_image, 500);
-			imageinterlace($gd_image, false);
-
-			imagejpeg($gd_image, $jpgfile);
-
-			$fh = fopen($jpgfile, "rb");
-			$memimage = fread($fh, filesize($jpgfile));
-			fclose($fh);
-			unlink($jpgfile);
-
-			$tagwriter = new getid3_writetags();
-			$tagwriter->filename = $this->download_loc . $path;
-			$tagwriter->tagformats = ['id3v2.3'];
-			$tagwriter->remove_other_tags = false;
-			$tagdata = [];    
-			foreach (['title', 'album', 'artist', 'genre', 'year'] as $tag) {
-				$tagdata[$tag][0] = $tag_info['comments'][$tag][0];
+			if ($gd_image) {
+				$gd_image = imagescale($gd_image, 500);
+				imageinterlace($gd_image, false);
+	
+				imagejpeg($gd_image, $jpgfile);
+	
+				$fh = fopen($jpgfile, "rb");
+				$memimage = fread($fh, filesize($jpgfile));
+				fclose($fh);
+				unlink($jpgfile);
+	
+				$tagwriter = new getid3_writetags();
+				$tagwriter->filename = $this->download_loc . $path;
+				$tagwriter->tagformats = ['id3v2.3'];
+				$tagwriter->remove_other_tags = false;
+				$tagdata = [];    
+				foreach (['title', 'album', 'artist', 'genre', 'year'] as $tag) {
+					$tagdata[$tag][0] = $tag_info['comments'][$tag][0];
+				}
+				$tagdata['attached_picture'][0]['data'] = $memimage;
+				$tagdata['attached_picture'][0]['picturetypeid'] = 0x03;
+				$tagdata['attached_picture'][0]['mime'] = 'image/jpeg';
+				$tagdata['attached_picture'][0]['description'] = 'Episode Art';
+	
+				$tagwriter->tag_data = $tagdata;
+				$tagwriter->WriteTags();	
 			}
-			$tagdata['attached_picture'][0]['data'] = $memimage;
-			$tagdata['attached_picture'][0]['picturetypeid'] = 0x03;
-			$tagdata['attached_picture'][0]['mime'] = 'image/jpeg';
-			$tagdata['attached_picture'][0]['description'] = 'Episode Art';
-
-			$tagwriter->tag_data = $tagdata;
-			$tagwriter->WriteTags();
 		}
 
 		return "/" . $path;

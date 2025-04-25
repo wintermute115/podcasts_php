@@ -54,7 +54,7 @@ class PodcastCurl {
 			$item_date = DateTime::createFromFormat('Y-m-d H:i:s', $entry->get_date('Y-m-d H:i:s'));
 			if ($item_date > $last_date && $item_date <= $end_date) {
 				$enclosure = $entry->get_enclosure();
-				if ($enclosure->get_medium() == 'audio' || $enclosure->get_handler() == 'mp3') {
+				if ($enclosure && ($enclosure->get_medium() == 'audio' || $enclosure->get_handler() == 'mp3')) {
 					$item = [
 						"title" => $entry->get_title(),
 						"url" => $enclosure->get_link(),
