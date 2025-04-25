@@ -386,7 +386,7 @@ class FileConn {
 				$playlist = file($this->playlist);
 				for ($i=0; $i<$position; $i++) {
 					$delete = array_shift($playlist);
-					echo "Deleting " . $delete . "\n";
+					echo "Deleting " . $delete;
 					unlink(chop($this->ipod . $delete));
 					$folder_regex = "/^.*\/Podcasts\/([^\/]*)\//";
 					preg_match($folder_regex, $delete, $matches);
