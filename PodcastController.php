@@ -184,7 +184,9 @@ class PodcastController {
 			$max_num = max($max_num, $count);
 		}
 		$total_podcasts = count($deleted);
-		echo $total . ($total === 1 ? " episode" : " episodes") . " of " . $total_podcasts . ($total_podcasts === 1 ? " podcast" : " podcasts") . " have been deleted.\n";
+		echo $this->colors['bright'];
+		echo $total . ($total === 1 ? " episode" : " episodes") . " of " . $total_podcasts . ($total_podcasts === 1 ? " podcast" : " podcasts") . " have been deleted.";
+		echo $this->colors['end'] . "\n";
 		echo str_pad("", $max_len + $max_num + 2, '-') . "\n";
 		foreach ($deleted as $podcast => $count) {
 			echo str_pad($podcast, $max_len) . "  " . str_pad("", $count, "X") . "\n";

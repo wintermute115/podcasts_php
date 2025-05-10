@@ -378,7 +378,8 @@ class FileConn {
 		$bookmark_list = file($this->bookmarks);
 		foreach($bookmark_list as $bookmark) {
 			preg_match($this->bookmark_regex, $bookmark, $matches);
-			if ($matches[2] === 'Podcasts') {					// Reset the playlist counter to 0
+			if ($matches[2] === 'Podcasts') {
+				// Reset the playlist counter to 0
 				preg_replace("/^>\d*;(\d*)/", "0", $bookmark);
 
 				$position = $matches[1];
