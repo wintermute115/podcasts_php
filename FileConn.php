@@ -354,6 +354,19 @@ class FileConn {
 	}
 
 	/**
+	 * Write a log entry saying a podcast has been toggled on or off
+	 *
+	 * @param string $name
+	 * @param string $state
+	 * @return void
+	 */
+	public function write_toggle_log(string $name, string $state) :void {
+		$log_entry = $this->log_timestamp();
+		$log_entry .= "Podcast \"" . $name . "\" is now " . $state . "\n";
+		$this->write_to_log($log_entry);
+	}
+
+	/**
 	 * Write a log entry saying a new podcast has been added
 	 *
 	 * @param string $name

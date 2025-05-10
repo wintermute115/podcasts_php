@@ -141,6 +141,7 @@ class PodcastController {
 			$response = $this->dbconn->toggle_podcast_by_name(podcast_name: $podcast_name);
 		}
 		echo "Podcast \"" . $response['name'] . "\" is now " . $response['state'] . ".\n";
+		$this->fileconn->write_toggle_log(name: $response['name'], state: $response['state']);
 	}
 
 	/**
