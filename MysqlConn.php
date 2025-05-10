@@ -140,7 +140,7 @@ EOT;
 	public function add_new_podcast(string $name, string $url) :bool {
 		$sql = <<<EOT
 INSERT INTO podcasts
-	(podcast_name, podcast_feed, podcast_last_download, podcast_skip)
+	(podcast_name, podcast_feed, podcast_last_downloaded, podcast_skip)
 VALUES
 	(:name, :url, '2000-01-01 00:00:00', '1');
 EOT;
