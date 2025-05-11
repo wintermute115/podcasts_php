@@ -95,6 +95,21 @@ class PodcastCurl {
 	}
 
 	/**
+	 * Get the publish date of the first item in a feed
+	 *
+	 * @param string $url
+	 * @return DateTime
+	 */
+	public function get_feed_start_date(string $url) :DateTime {
+		$this->parser->set_feed_url($url);
+		$this->parser->init();
+		$this->parser->handle_content_type();
+		$entries = $this->parser->get_items();
+		$first_item = end($entries);
+		return DateTime::createFromFormat('Y-m-d H:i:s', $first_item->get_date('Y-m-d H:i:s'));
+	}
+
+	/**
 	 * Show the amount downloaded in realtime
 	 *
 	 * @param CurlHandle $ch

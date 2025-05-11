@@ -137,16 +137,19 @@ EOT;
 	 * @param string $url
 	 * @return boolean
 	 */
-	public function add_new_podcast(string $name, string $url) :bool {
+	public function add_new_podcast(string $name, string $url, DateTime $date) :bool {
+		$date = $date->modify("-1 day");
+		$date = $date->format("Y-m-d 00:00:00");
 		$sql = <<<EOT
 INSERT INTO podcasts
 	(podcast_name, podcast_feed, podcast_last_downloaded, podcast_skip)
 VALUES
-	(:name, :url, '2000-01-01 00:00:00', '1');
+	(:name, :url, :date, '1');
 EOT;
 		$insert = $this->conn->prepare($sql);
 		$insert->bindParam(':name', $name, PDO::PARAM_STR);
 		$insert->bindParam(':url', $url, PDO::PARAM_STR);
+		$insert->bindParam(':date', $date, PDO::PARAM_STR);
 		return $insert->execute();
 	}
 

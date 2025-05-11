@@ -202,7 +202,8 @@ class PodcastController {
 	 * @return void
 	 */
 	public function add_new_podcast(string $name, string $url) :void {
-		if ($this->dbconn->add_new_podcast(name: $name, url: $url)) {
+		$feed_start_date = $this->curl->get_feed_start_date(url: $url);
+		if ($this->dbconn->add_new_podcast(name: $name, url: $url, date: $feed_start_date)) {
 			echo "Podcast \"$name\" [$url] has been added to the library\n";
 			$this->fileconn->write_add_log(name: $name, url: $url);
 		} else {
