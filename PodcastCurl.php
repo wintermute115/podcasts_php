@@ -43,8 +43,8 @@ class PodcastCurl {
 	public function download_feed(string $url, string $start_date, bool $single_year) :array {
 		$last_date = DateTime::createFromFormat('Y-m-d H:i:s', $start_date);
 		// If the year flag is set, skip back that far before downloading
-		$end_date = ($single_year ? $last_date : new DateTime());
-		$end_date->add(DateInterval::createFromDateString("1 year"));
+		$end_date = ($single_year ? clone $last_date : new DateTime());
+		$end_date->modify("+1 year");
 		$items = [];
 		$this->parser->set_feed_url($url);
 		$this->parser->init();
