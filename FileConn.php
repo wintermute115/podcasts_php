@@ -99,8 +99,12 @@ class FileConn {
 	 * @param integer $len
 	 * @return string
 	 */
-	private function create_random_name(int $len=16) :string {
+	private function create_random_name(?DateTime $date = null, int $len=20) :string {
 		$output = '';
+		if (!empty($date)) {
+			$output .= $date->format("Ymd_His_");
+		}
+		$len -= strlen($output);
 		$alphabet = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 		$alphabet_len = strlen($alphabet);
 		for ($i=0; $i<$len; $i++) {
@@ -213,10 +217,11 @@ class FileConn {
 	 *
 	 * @param string $bitstream
 	 * @param string $podcast_name
+	 * @param DateTime $date
 	 * @return string
 	 */
-	public function save_podcast(string $bitstream, string $podcast_name, string $episode_title) :string {
-		$filename = $this->create_random_name();
+	public function save_podcast(string $bitstream, string $podcast_name, string $episode_title, DateTime $date) :string {
+		$filename = $this->create_random_name(date: $date);
 		$this->create_path($this->download_loc . "Podcasts/" . $podcast_name . "/");
 		$path = "Podcasts/" . $podcast_name . "/" . $filename;
 		$fh = fopen($this->download_loc . $path, "wb");
@@ -261,6 +266,9 @@ class FileConn {
 				$tagwriter->remove_other_tags = false;
 				$tagdata = [];    
 				foreach (['title', 'album', 'artist', 'genre', 'year'] as $tag) {
+					if (!isset($tag_info['comments'][$tag])) {
+						$tag_info['comments'][$tag] = [''];
+					}
 					$tagdata[$tag][0] = $tag_info['comments'][$tag][0];
 				}
 				$tagdata['attached_picture'][0]['data'] = $memimage;

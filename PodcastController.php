@@ -96,12 +96,13 @@ class PodcastController {
 				foreach($podcasts as $podcast) {
 					$count_podcasts++;
 					$duration = $podcast['duration'] ?? "??:??";
+					$podcast_date = DateTime::createFromFormat('Y-m-d H:i:s', $podcast['date']);
 					$length = $podcast['length'] ?? 0;
 					$bitstream = $this->curl->get_podcast(url: $podcast['url'], title: $podcast['title'], duration: $duration, length: $length);
-					$location = $this->fileconn->save_podcast(bitstream: $bitstream, podcast_name: $item['podcast_name'], episode_title: $podcast['title']);
+					$location = $this->fileconn->save_podcast(bitstream: $bitstream, podcast_name: $item['podcast_name'], episode_title: $podcast['title'], date: $podcast_date);
 					$temporary_playlist[$podcast['date'] . $item['podcast_name']]= $location;
 					$downloaded++;
-					$last_download = max($last_download, DateTime::createFromFormat('Y-m-d H:i:s', $podcast['date']));
+					$last_download = max($last_download, $podcast_date);
 					$this->fileconn->write_download_log(title: $podcast['title'], filename: basename($location), duration: $duration, desc: $podcast['desc']);
 				}
 				if ($count_podcasts > 0) {
