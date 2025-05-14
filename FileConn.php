@@ -181,6 +181,8 @@ class FileConn {
 			fwrite($fh, $playlist);
 			fclose($fh);
 		} elseif ($mode == "o") {
+			// Create a copy of the existing playlist, in case we need to roll back
+			copy($this->playlist, $this->playlist . ".old");
 			$fh = fopen($this->playlist, "w");
 			fwrite($fh, $playlist);
 			fclose($fh);
