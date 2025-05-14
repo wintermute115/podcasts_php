@@ -78,7 +78,8 @@ class PodcastController {
 		}
 
 		if (!$this->curl->test_connection()) {
-			die ("No internet connection\n");
+			echo "No internet connection\n";
+			exit(1);
 		}
 
 		$downloaded = 0;

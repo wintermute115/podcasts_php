@@ -23,20 +23,20 @@ $options = getopt($shortops);
 // List podcasts
 if (isset($options['l'])) {
 	$controller->list_podcasts(order: $options['l']);
-	exit();
+	exit(0);
 }
 
 // Delete podcasts that have been listened to
 if (isset($options['x'])) {
 	$controller->clean_podcasts();
-	exit();
+	exit(0);
 }
 
 // Add a new podcast to the database
 if (isset($options['a'])) {
 	if (empty($options['n']) || empty($options['u'])) {
 		print "Podcast [n]ame and [u]rl must be specified\n";
-		exit();
+		exit(1);
 	}
 	$controller->add_new_podcast(name: $options['n'], url: $options['u']);
 	exit();
@@ -45,7 +45,7 @@ if (isset($options['a'])) {
 // Copy podcasts to iPod
 if (isset($options['m'])) {
 	$controller->move_podcasts(mode: $options['m']);
-	exit();
+	exit(0);
 }
 
 //Togle podcast on or off - needs to also specify a podcast ID
@@ -62,8 +62,9 @@ if (isset($options['t'])) {
 		$controller->toggle_podcast(podcast_id: $podcast_id, podcast_name: $podcast_name);
 	} else {
 		print "A podcast name or ID must be specified\n";
+		exit(1);
 	}
-	exit();
+	exit(0);
 }
 
 
@@ -86,3 +87,4 @@ if (isset($options['y'])) {
 }
 
 $controller->download_podcasts(podcast_id: $podcast_id, podcast_name: $podcast_name, single_year: $year);
+exit(0);

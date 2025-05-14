@@ -16,7 +16,8 @@ class MysqlConn {
 			$dsn = "mysql:dbname={$this->database};host={$this->host}";
 			$this->conn = new PDO($dsn, $this->user, $this->pass);
 		} catch (Exception $e) {
-			die ("Cannot connect to database\n");
+			echo "Cannot connect to database\n";
+			exit(1);
 		}
 	}
 
@@ -79,7 +80,8 @@ EOT;
 			$response['name'] = $results['podcast_name'];
 			$response['state'] = ($results['podcast_skip'] == '1' ? "off" : "on");
 		} else {
-			die("Cannot get podcast list");
+			echo "Cannot get podcast list\n";
+			exit(1);
 		}
 		return $response;
 	}
@@ -109,7 +111,8 @@ EOT;
 			$response['name'] = $podcast_name;
 			$response['state'] = ($results['podcast_skip'] == '1' ? "off" : "on");	
 		} else {
-			die("Cannot update database");
+			echo "Cannot update database";
+			exit(1);
 		}
 		return $response;
 	}
