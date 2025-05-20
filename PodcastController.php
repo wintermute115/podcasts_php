@@ -3,7 +3,6 @@
 require_once('MysqlConn.php');
 require_once('PodcastCurl.php');
 require_once('FileConn.php');
-require_once('vendor/james-heinrich/getid3/getid3/getid3.php');
 
 /**
  * Core controller module that handles interactions between different parts of the system
@@ -13,6 +12,7 @@ class PodcastController {
 	private $curl;
 	private $fileconn;
 	private $colors;
+	private $external_display;
 
 	public function __construct() {
 		$this->dbconn = new MysqlConn();
@@ -24,6 +24,7 @@ class PodcastController {
 			'grey' => "\033[2;37m",
 			'end' => "\033[0m"
 		];
+		$this->external_display = "../ledmatrix/ledmatrix.php";
 	}
 
 	/**
@@ -126,6 +127,7 @@ class PodcastController {
 			$this->dbconn->mysqldump($this->fileconn->mysqldump_location);
 		}
 		$this->fileconn->remove_lockfile();
+		$this->external_display();
 	}
 
 	/**
@@ -167,6 +169,7 @@ class PodcastController {
 		$this->fileconn->backup(folder: "Podcasts", delete: true);
 		$this->fileconn->backup(folder: "Music", delete: false);
 		$this->fileconn->backup(folder: "Playlists", delete: true);
+		$this->external_display();
 	}
 
 	/**
@@ -211,5 +214,11 @@ class PodcastController {
 		} else {
 			"Could not add new podcasts to the library\n";
 		}
+	}
+
+	private function external_display() :void {
+		if ($this->external_display != '' && file_exists($this->external_display)) {
+			exec($this->external_display);
+		} 
 	}
 }
