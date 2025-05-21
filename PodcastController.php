@@ -24,7 +24,7 @@ class PodcastController {
 			'grey' => "\033[2;37m",
 			'end' => "\033[0m"
 		];
-		$this->external_display = "../ledmatrix/ledmatrix.php";
+		$this->external_display = "../ledmatrix/ledmatrix.py";
 	}
 
 	/**
