@@ -217,7 +217,7 @@ class PodcastController {
 	}
 
 	private function external_display() :void {
-		if ($this->external_display != '' && file_exists($this->external_display)) {
+		if ($this->external_display != '' && file_exists($this->external_display) && is_executable(($this->external_display))) {
 			exec($this->external_display);
 		} 
 	}
