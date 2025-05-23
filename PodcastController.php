@@ -159,6 +159,7 @@ class PodcastController {
 			print "A valid mode has not been set. Can be [a]ppend, [i]nsert or [o]verwrite.\n";
 			return;
 		}
+		$this->external_display();
 		$result = $this->fileconn->move_podcasts();
 		print $result['message'];
 		if (!$result['success']) {
