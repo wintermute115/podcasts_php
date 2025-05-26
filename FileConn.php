@@ -240,7 +240,7 @@ class FileConn {
 			$tagwriter->filename = $this->download_loc . $path;
 			$tagwriter->remove_other_tags = false;
 			$tag_data = [];
-			$tag_data['title'][0] = $episode_title;
+			$tag_data['title'][0] = html_entity_decode($episode_title, ENT_QUOTES);
 			$tagwriter->tag_data = $tag_data;
 			$tagwriter->tagformats = ['id3v1', 'id3v2.3'];
 			$tagwriter->WriteTags();
