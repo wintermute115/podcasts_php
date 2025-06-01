@@ -210,7 +210,7 @@ class FileConn {
 		$fh = fopen($this->download_playlist, 'w');
 		fwrite($fh, '');
 		fclose($fh);
-		echo "Done\n";
+		echo "Done.\n";
 		return true;
 	}
 
