@@ -226,18 +226,19 @@ class FileConn {
 		$filename = $this->create_random_name(date: $date);
 		$this->create_path($this->download_loc . "Podcasts/" . $podcast_name . "/");
 		$path = "Podcasts/" . $podcast_name . "/" . $filename;
-		$fh = fopen($this->download_loc . $path, "wb");
+		$download_loc = $this->download_loc . $path;
+		$fh = fopen($download_loc, "wb");
 		fwrite($fh, $bitstream);
 		fclose($fh);
 
 		// Make sure a title has been
 		$id3 = new getID3();
 		$id3->setOption(array('encoding' => 'UTF-8'));
-		$tag_info = $id3->analyze($this->download_loc . $path);
+		$tag_info = $id3->analyze($download_loc);
 		$id3->CopyTagsToComments($tag_info);
 		if (!isset($tag_info['comments_html']['title'])) {
 			$tagwriter = new getid3_writetags();
-			$tagwriter->filename = $this->download_loc . $path;
+			$tagwriter->filename = $download_loc;
 			$tagwriter->remove_other_tags = false;
 			$tag_data = [];
 			$tag_data['title'][0] = html_entity_decode($episode_title, ENT_QUOTES);
