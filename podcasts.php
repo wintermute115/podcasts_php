@@ -6,15 +6,15 @@ require_once('vendor/autoload.php');
 require_once('PodcastController.php');
 
 // Set up commandline options
-$shortops  = "l::";
+$shortops  = "a";
+$shortops .= "l::";
 $shortops .= "m:";
-$shortops .= "p:";
-$shortops .= "y";
-$shortops .= "t";
-$shortops .= "x";
-$shortops .= "a";
 $shortops .= "n:";
+$shortops .= "p:";
+$shortops .= "t";
 $shortops .= "u:";
+$shortops .= "x";
+$shortops .= "y";
 
 $controller = new PodcastController();
 
