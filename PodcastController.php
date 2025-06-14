@@ -179,7 +179,9 @@ class PodcastController {
 	 * @return void
 	 */
 	public function clean_podcasts() :void {
-		$deleted = $this->fileconn->clean_podcasts();
+		$results = $this->fileconn->clean_podcasts();
+		$deleted = $results['podcasts_deleted'];
+		$size = $this->format_bytes(size: $results['size']);
 		// Print out data
 		$total = 0;
 		$max_len = 0;
@@ -192,7 +194,7 @@ class PodcastController {
 		}
 		$total_podcasts = count($deleted);
 		echo $this->colors['bright'];
-		echo $total . ($total === 1 ? " episode" : " episodes") . " of " . $total_podcasts . ($total_podcasts === 1 ? " podcast" : " podcasts") . " have been deleted.";
+		echo $total . ($total === 1 ? " episode" : " episodes") . " of " . $total_podcasts . ($total_podcasts === 1 ? " podcast (" : " podcasts (") . $size .  ") have been deleted.";
 		echo $this->colors['end'] . "\n";
 		echo str_pad("", $max_len + $max_num + 2, '-') . "\n";
 		foreach ($deleted as $podcast => $count) {
@@ -221,5 +223,13 @@ class PodcastController {
 		if ($this->external_display != '' && file_exists($this->external_display) && is_executable(($this->external_display))) {
 			exec($this->external_display);
 		} 
+	}
+
+	private function format_bytes(int $size, int $precision = 2) :string {
+		$base = log($size, 1024);
+		$suffixes = ['B', 'KiB', 'MiB', 'GiB', 'TiB'];
+		$intbase = floor($base);
+
+		return round(pow(1024, $base - $intbase), $precision) .' '. $suffixes[$intbase];
 	}
 }

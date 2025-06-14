@@ -397,6 +397,7 @@ class FileConn {
 	 */
 	public function clean_podcasts() :array {
 		$podcasts_deleted = [];
+		$filesize = 0;
 		$bookmarks_rebuilt = "";
 		// Get the location from the recent bookmarks file
 		$bookmark_list = file($this->bookmarks);
@@ -410,9 +411,10 @@ class FileConn {
 				// Get the playlist file
 				$playlist = file($this->playlist);
 				for ($i=0; $i<$position; $i++) {
-					$delete = array_shift($playlist);
-					echo "Deleting " . $delete;
-					unlink(chop($this->ipod . $delete));
+					$delete = chop(array_shift($playlist));
+					$filesize += filesize($this->ipod . $delete);
+					echo "Deleting " . $delete . "\n";
+					unlink($this->ipod . $delete);
 					$folder_regex = "/^.*\/Podcasts\/([^\/]*)\//";
 					preg_match($folder_regex, $delete, $matches);
 					$folder = $matches[1];
@@ -434,7 +436,10 @@ class FileConn {
 		$fh = fopen($this->bookmarks, "w");
 		fwrite($fh, $bookmarks_rebuilt);
 		fclose($fh);
-		return $podcasts_deleted;
+		$return = [];
+		$return['podcasts_deleted'] = $podcasts_deleted;
+		$return['size'] = $filesize;
+		return $return;
 	}
 	
 	/**
