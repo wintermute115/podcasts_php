@@ -1,6 +1,7 @@
 <?php
 use Id3\Id3Parser;
 use PhpRsync\Rsync;
+use \ForceUTF8\Encoding;
 
 /**
  * Handles all interactions with the filesystem
@@ -241,8 +242,10 @@ class FileConn {
 			$tagwriter->filename = $download_loc;
 			$tagwriter->remove_other_tags = false;
 			$tag_data = [];
-			$fixed_title = preg_replace("/–/", "-", $episode_title);
-			$tag_data['title'][0] = html_entity_decode($fixed_title, ENT_QUOTES);
+			$episode_title = Encoding::toLatin1($episode_title);
+			
+			// $episode_title = preg_replace("/–|–/", "-", $episode_title);
+			$tag_data['title'][0] = html_entity_decode($episode_title, ENT_QUOTES);
 			$tagwriter->tag_data = $tag_data;
 			$tagwriter->tagformats = ['id3v1', 'id3v2.3'];
 			$tagwriter->WriteTags();
