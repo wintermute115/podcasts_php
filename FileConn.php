@@ -244,7 +244,6 @@ class FileConn {
 			$tag_data = [];
 			$episode_title = Encoding::toLatin1($episode_title);
 			
-			// $episode_title = preg_replace("/–|–/", "-", $episode_title);
 			$tag_data['title'][0] = html_entity_decode($episode_title, ENT_QUOTES);
 			$tagwriter->tag_data = $tag_data;
 			$tagwriter->tagformats = ['id3v1', 'id3v2.3'];

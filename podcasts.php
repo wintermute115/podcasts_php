@@ -39,7 +39,7 @@ if (isset($options['a'])) {
 		exit(1);
 	}
 	$controller->add_new_podcast(name: $options['n'], url: $options['u']);
-	exit();
+	exit(0);
 }
 
 // Copy podcasts to iPod
