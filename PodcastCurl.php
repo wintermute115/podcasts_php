@@ -34,7 +34,27 @@ class PodcastCurl {
 	}
 
 	/**
-	 * Get a list of all episodes in a feed waiting to be downlaoded
+	 * If the URL has changed for a feed, note it so it can be changed in the database
+	 *
+	 * @param string $url
+	 * @return string|null
+	 */
+	public function get_redirect(string $url) :?string {
+		$ch = curl_init($url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_FRESH_CONNECT, true);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
+		if (curl_exec($ch) !== false) {
+			$info = curl_getinfo($ch);
+			if ($info['http_code'] >= 300 && $info['http_code'] < 400) {
+				return $info['redirect_url'];
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Get a list of all episodes in a feed waiting to be downloaded
 	 *
 	 * @param string $url
 	 * @param string $start_date

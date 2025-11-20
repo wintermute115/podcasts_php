@@ -28,7 +28,7 @@ class PodcastController {
 	}
 
 	/**
-	 * Display a list off the podcasts being tracked in the database
+	 * Display a list of the podcasts being tracked in the database
 	 *
 	 * @param string $order
 	 * 		'd' - Display by date, most recently updated first
@@ -93,6 +93,10 @@ class PodcastController {
 			$last_download = DateTime::createFromFormat('Y-m-d H:i:s', $item['podcast_last_downloaded']);
 			if ($podcast_id === $item['podcast_id'] || $podcast_name === $item['podcast_name'] || ($podcast_id === 0 && $podcast_name === '' && $item['podcast_skip'] === '0')) {
 				echo $item['podcast_name'] . "\n";
+				$new_url = $this->curl->get_redirect($item['podcast_feed']);
+				if ($new_url) {
+					$this->dbconn->update_url($item['podcast_id'], $new_url);
+				}
 				$podcasts = $this->curl->download_feed(url: $item['podcast_feed'], start_date: $item['podcast_last_downloaded'], single_year: $single_year);
 				$count_podcasts = 0;
 				foreach($podcasts as $podcast) {

@@ -157,6 +157,25 @@ EOT;
 	}
 
 	/**
+	 * Updates the URL for a feed. Triggered when a 301/302 is found
+	 *
+	 * @param integer $podcast_id
+	 * @param string $podcast_url
+	 * @return boolean
+	 */
+	public function update_url(int $podcast_id, string $podcast_url): bool {
+		$sql = <<<EOT
+UPDATE podcasts 
+SET podcast_feed = :url
+WHERE podcast_id = :id;
+EOT;
+	$update = $this->conn->prepare($sql);
+	$update->bindParam(':url', $podcast_url, PDO::PARAM_STR);
+	$update->bindParam(':id', $podcast_id, PDO::PARAM_INT);
+	return $update->execute();
+}
+
+	/**
 	 * Create a backup of the database in case of disaster
 	 *
 	 * @param string $location
