@@ -49,6 +49,9 @@ class PodcastCurl {
 			if ($info['http_code'] >= 300 && $info['http_code'] < 400) {
 				return $info['redirect_url'];
 			}
+			if ($info['http_code'] >= 400 && $info['http_code'] < 500) {
+				echo "    Does not Exist\n";
+			}
 		}
 		return false;
 	}
