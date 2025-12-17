@@ -46,7 +46,8 @@ class PodcastCurl {
 		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
 		if (curl_exec($ch) !== false) {
 			$info = curl_getinfo($ch);
-			if ($info['http_code'] >= 300 && $info['http_code'] < 400) {
+			// echo "    ----" . $info['http_code'] . "\n";
+ 			if ($info['http_code'] >= 300 && $info['http_code'] < 400) {
 				return $info['redirect_url'];
 			}
 			if ($info['http_code'] >= 400 && $info['http_code'] < 500) {
