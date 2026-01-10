@@ -111,7 +111,6 @@ class PodcastCurl {
 		curl_setopt($ch, CURLOPT_NOPROGRESS, false );
 		curl_setopt($ch, CURLOPT_XFERINFOFUNCTION, [$this, 'show_status']);
 		$file = curl_exec($ch);
-		curl_close($ch);
 		$length = number_format($length / 1024);
 		echo str_pad('', 40) . "\r";
 		echo "$length Kb\n";
