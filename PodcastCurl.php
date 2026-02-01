@@ -21,11 +21,11 @@ class PodcastCurl {
 	 * @return boolean
 	 */
 	public function test_connection() :bool {
-		$ch = curl_init("https://www.google.com/");
+		$ch = curl_init("https://8.8.8.8/");
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 		curl_setopt($ch, CURLOPT_FRESH_CONNECT, true);
-		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
 		curl_setopt($ch, CURLOPT_CONNECT_ONLY, true);
 		if (curl_exec($ch) === false) {
 			return false;
