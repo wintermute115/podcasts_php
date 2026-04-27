@@ -110,6 +110,7 @@ class PodcastCurl {
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 		curl_setopt($ch, CURLOPT_NOPROGRESS, false );
 		curl_setopt($ch, CURLOPT_XFERINFOFUNCTION, [$this, 'show_status']);
+		curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (X11; Linux x86_64; rv:150.0) Gecko/20100101 Firefox/150.0");
 		$file = curl_exec($ch);
 		$length = number_format($length / 1024);
 		echo str_pad('', 40) . "\r";
