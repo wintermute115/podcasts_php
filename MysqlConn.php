@@ -5,11 +5,11 @@
  * Handles all communication with the database
  */
 class MysqlConn {
-	private $host = 'localhost';
-	private $database = 'podcasts';
-	private $user = 'root';
-	private $pass = 'root';
-	private $conn;
+	private String $host = 'localhost';
+	private String $database = 'podcasts';
+	private String $user = 'root';
+	private String $pass = 'root';
+	private PDO $conn;
 
 	public function __construct() {
 		try {

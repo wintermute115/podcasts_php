@@ -8,11 +8,11 @@ require_once('FileConn.php');
  * Core controller module that handles interactions between different parts of the system
  */
 class PodcastController {
-	private $dbconn;
-	private $curl;
-	private $fileconn;
-	private $colors;
-	private $external_display;
+	private MysqlConn $dbconn;
+	private PodcastCurl $curl;
+	private FileConn $fileconn;
+	private Array $colors;
+	private String $external_display;
 
 	public function __construct() {
 		$this->dbconn = new MysqlConn();
@@ -139,7 +139,7 @@ class PodcastController {
 	 *
 	 * @param integer $podcast_id
 	 * @param string $podcast_name
-	 * @return voidToggle the status 
+	 * @return void Toggle the status 
 	 */
 	public function toggle_podcast(int $podcast_id, string $podcast_name) :void {
 		$response = [];
@@ -172,7 +172,7 @@ class PodcastController {
 		$this->fileconn->copy_playlist(mode: $mode);
 		$this->fileconn->write_move_log(mode: $mode, message: chop($result['message']));
 		$this->fileconn->backup(folder: "Podcasts", delete: true);
-		// $this->fileconn->backup(folder: "Music", delete: false);
+		$this->fileconn->backup(folder: "Music", delete: false);
 		$this->fileconn->backup(folder: "Playlists", delete: true);
 		$this->external_display();
 	}
@@ -232,7 +232,7 @@ class PodcastController {
 	private function format_bytes(int $size, int $precision = 2) :string {
 		$base = log($size, 1024);
 		$suffixes = ['B', 'KiB', 'MiB', 'GiB', 'TiB'];
-		$intbase = floor($base);
+		$intbase = intval(floor($base));
 
 		return round(pow(1024, $base - $intbase), $precision) .' '. $suffixes[$intbase];
 	}

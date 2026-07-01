@@ -6,11 +6,9 @@ require_once('vendor/simplepie/autoloader.php');
  * Handles all connections to the internet
  */
 class PodcastCurl {
-	private $uastring;
-	private $parser;
+	private SimplePie\SimplePie $parser;
 
 	public function __construct() {
-		$this->uastring = "User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:30.0) Gecko/20100101 Firefox/30.0";
 		$this->parser = new SimplePie\SimplePie();
 	}
 
@@ -112,6 +110,7 @@ class PodcastCurl {
 		curl_setopt($ch, CURLOPT_XFERINFOFUNCTION, [$this, 'show_status']);
 		curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (X11; Linux x86_64; rv:150.0) Gecko/20100101 Firefox/150.0");
 		$file = curl_exec($ch);
+
 		$length = number_format($length / 1024);
 		echo str_pad('', 40) . "\r";
 		echo "$length Kb\n";

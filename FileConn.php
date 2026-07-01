@@ -7,19 +7,19 @@ use \ForceUTF8\Encoding;
  * Handles all interactions with the filesystem
  */
 class FileConn {
-	private $ipod;
-	private $download_loc;
-	private $lockfile;
-	private $logfile;
-	private $bookmarks;
-	private $bookmark_regex;
-	private $playlist;
-	private $download_playlist;
-	private $backup_location;
-	public $mysqldump_location;
+	private String $ipod;
+	private String $download_loc;
+	private String $lockfile;
+	private String $logfile;
+	private String $bookmarks;
+	private String $bookmark_regex;
+	private String $playlist;
+	private String $download_playlist;
+	private String $backup_location;
+	public String $mysqldump_location;
 
 	public function __construct() {
-		$this->ipod = "/media/ross/iPodClassic/";
+		$this->ipod = "/run/media/ross/iPodClassic/";
 		// $this->ipod = "/home/ross/ipod/";
 		$this->download_loc = "/home/ross/Downloads/New_Podcasts/";
 		$this->lockfile = $this->download_loc . "podcasts.lock";
